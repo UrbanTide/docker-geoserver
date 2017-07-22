@@ -16,7 +16,7 @@ RUN apt-get -y update
 
 #-------------Application Specific Stuff ----------------------------------------------------
 
-ENV GS_VERSION 2.9.1
+ENV GS_VERSION 2.11.1
 ENV GEOSERVER_DATA_DIR /opt/geoserver/data_dir
 
 RUN mkdir -p $GEOSERVER_DATA_DIR
@@ -30,6 +30,9 @@ RUN ln -s /usr/lib/jvm/java-8-openjdk-amd64 /usr/lib/jvm/default-java
 ENV JAVA_HOME /usr/lib/jvm/default-java
 
 ADD resources /tmp/resources
+
+# Get ElasticSearch plugin
+RUN wget https://github.com/ngageoint/elasticgeo/releases/download/${GS_VERSION}-RC1/elasticgeo-${GS_VERSION}.zip -P /tmp/resources/plugins/;
 
 # If a matching Oracle JDK tar.gz exists in /tmp/resources, move it to /var/cache/oracle-jdk8-installer
 # where oracle-java8-installer will detect it
